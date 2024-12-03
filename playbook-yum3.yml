@@ -1,0 +1,17 @@
+---
+- name: Install EPEL libraries in YUM
+  hosts: planetexpress
+  become: yes # run entire playbook with sudo
+  connection: ansible.builtin.ssh
+
+  tasks:
+   - name: Install a list of packages (suitable replacement for 2.11 loop deprecation warning)
+     ansible.builtin.yum:
+       name:
+           - nginx
+           - postgresql
+           - postgresql-server
+       state: present
+     when: ansible_distribution == "CentOS"
+  
+
